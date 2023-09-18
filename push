@@ -21,7 +21,10 @@ fi
 
 # Check if the encrypted directory exists, create it otherwise
 [ -d encrypted ] || mkdir encrypted
-rm encrypted/*
+
+# Initialize counter for sequential filenames
+counter=1
+
 # Encrypt each markdown file in the root directory
 for file in *.md; do
     # Skip README.md
@@ -29,19 +32,23 @@ for file in *.md; do
         continue
     fi
 
-    # Encrypt the file content
-    openssl enc -aes-256-cbc -pbkdf2 -salt -in "$file" -out "encrypted/$file.enc" -k "$PASSWORD"
+    # Add filename as the first row and then append file content
+    echo "$file" > tmp_file
+    cat "$file" >> tmp_file
 
-    # Encode the filename in base64
-    ENCODED_FILENAME=$(echo -n "$file" | base64 | tr '/+' '_-')
+    # Encrypt the tmp_file content
+    openssl enc -aes-256-cbc -pbkdf2 -salt -in tmp_file -out "encrypted/${counter}.enc" -k "$PASSWORD"
 
-    # Rename the encrypted file
-    mv "encrypted/$file.enc" "encrypted/$ENCODED_FILENAME"
+    # Increment counter
+    ((counter++))
 done
 
+# Remove temporary file
+rm tmp_file
+
 # Commit and push the changes in the ./encrypted folder
-cd encrypted || exit 1
-git add .
-git commit -m "$COMMIT_MESSAGE"
-git push
+#cd encrypted || exit 1
+#git add .
+#git commit -m "$COMMIT_MESSAGE"
+#git push
 

@@ -2,6 +2,7 @@
 
 PASSWORD=$1
 
+# If no password is provided, read it from the .env file
 if [ -z "$PASSWORD" ]; then
     if [ ! -f .env ]; then
         echo "No password provided and .env file does not exist."
@@ -15,21 +16,18 @@ fi
 cd encrypted || exit 1
 
 # Decrypt each file
-for file in *; do
-    # Decode the filename from base64
-    # Add padding '=' based on length
-    padding=$(echo -n "$file" | wc -c)
-    padding=$((padding % 4))
-    if [ $padding -eq 2 ]; then
-      file="${file}=="
-    elif [ $padding -eq 3 ]; then
-      file="${file}="
-    fi
-    DECODED_FILENAME=$(echo -n "$file" | tr '_-' '/+' | base64 -d 2> /dev/null)
+for file in *.enc; do
+    # Decrypt the file to a temporary file
+    openssl enc -aes-256-cbc -pbkdf2 -d -salt -in "$file" -out tmp_file -k "$PASSWORD"
 
-    # Decrypt the file content
-    if [ -n "$DECODED_FILENAME" ] && [ ! -d "../$DECODED_FILENAME" ]; then
-        openssl enc -aes-256-cbc -pbkdf2 -d -in "$file" -out "../$DECODED_FILENAME" -k "$PASSWORD"
-    fi
+    # Read the first line to get the original filename
+    original_filename=$(head -n 1 tmp_file)
+
+    # Remove the first line from the temporary file and save it as the original file
+    tail -n +2 tmp_file > "../$original_filename"
+
 done
+
+# Remove temporary file
+rm tmp_file
 
