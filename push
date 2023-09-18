@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Check if the right number of arguments are passed
+if [ "$#" -lt 1 ]; then
+    echo "Usage: gitencrypt COMMIT_MESSAGE [PASSWORD]"
+    exit 1
+fi
+
+COMMIT_MESSAGE=$1
+PASSWORD=$2
+
+# If no password is provided, read it from the .env file
+if [ -z "$PASSWORD" ]; then
+    if [ ! -f .env ]; then
+        echo "No password provided and .env file does not exist."
+        exit 1
+    fi
+    export $(grep -v '^#' .env | xargs)
+    PASSWORD=$DEFAULTPSW
+fi
+
+# Check if the encrypted directory exists, create it otherwise
+[ -d encrypted ] || mkdir encrypted
+rm encrypted/*
+# Encrypt each markdown file in the root directory
+for file in *.md; do
+    # Skip README.md
+    if [ "$file" == "README.md" ]; then
+        continue
+    fi
+
+    # Encrypt the file content
+    openssl enc -aes-256-cbc -pbkdf2 -salt -in "$file" -out "encrypted/$file.enc" -k "$PASSWORD"
+
+    # Encode the filename in base64
+    ENCODED_FILENAME=$(echo -n "$file" | base64 | tr '/+' '_-')
+
+    # Rename the encrypted file
+    mv "encrypted/$file.enc" "encrypted/$ENCODED_FILENAME"
+done
+
+# Commit and push the changes in the ./encrypted folder
+cd encrypted || exit 1
+git add .
+git commit -m "$COMMIT_MESSAGE"
+git push
+

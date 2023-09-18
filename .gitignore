@@ -1,0 +1,15 @@
+# Ignore all Markdown files in the root directory
+/*.md
+
+# Ignore all TXT files in the root directory
+/*.txt
+
+# Ignore env
+.env
+
+# But do not ignore the README.md file in the root directory
+!/README.md
+
+# Explicitly include the "encrypted" directory (optional)
+!/encrypted/
+

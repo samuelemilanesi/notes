@@ -1,0 +1,26 @@
+#!/bin/bash
+
+PASSWORD=$1
+
+# Go to the encrypted directory
+cd encrypted || exit 1
+
+# Decrypt each file
+for file in *; do
+    # Decode the filename from base64
+    # Add padding '=' based on length
+    padding=$(echo -n "$file" | wc -c)
+    padding=$((padding % 4))
+    if [ $padding -eq 2 ]; then
+      file="${file}=="
+    elif [ $padding -eq 3 ]; then
+      file="${file}="
+    fi
+    DECODED_FILENAME=$(echo -n "$file" | tr '_-' '/+' | base64 -d 2> /dev/null)
+
+    # Decrypt the file content
+    if [ -n "$DECODED_FILENAME" ] && [ ! -d "../$DECODED_FILENAME" ]; then
+        openssl enc -aes-256-cbc -pbkdf2 -d -in "$file" -out "../$DECODED_FILENAME" -k "$PASSWORD"
+    fi
+done
+
