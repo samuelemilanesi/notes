@@ -2,6 +2,15 @@
 
 PASSWORD=$1
 
+if [ -z "$PASSWORD" ]; then
+    if [ ! -f .env ]; then
+        echo "No password provided and .env file does not exist."
+        exit 1
+    fi
+    export $(grep -v '^#' .env | xargs)
+    PASSWORD=$DEFAULTPSW
+fi
+
 # Go to the encrypted directory
 cd encrypted || exit 1
 
