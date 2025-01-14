@@ -1,3 +1,40 @@
 project:
   type: website
   output-dir: docs
+  preview:
+    port: 3333
+
+website:
+  title: "Notes"
+
+  page-footer:
+    center: "Page built with [Quarto](https://quarto.org/)."
+  navbar:
+    background: $body-bg
+    search: true
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "About"
+        href: about.qmd
+
+format:
+  html:
+    theme:
+      light: [default, theme-light.scss]
+      dark: [cyborg, theme-dark.scss]
+    css: style.css
+    code-copy: true
+    code-overflow: wrap
+    toc: true
+    code-fold: true
+    code-tools: true
+    html-math-method: katex
+    include-in-header:
+      text: |
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    fontsize: 1.1em
+    linestretch: 1
+jupyter: python3
+execute:
+  warning: false

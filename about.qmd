@@ -1,0 +1,21 @@
+---
+title: "Samuele Milanesi"
+about:
+  template: jolla
+  image: https://avatars.githubusercontent.com/u/33413878?v=4
+  links:
+    - icon: github
+      text: Github
+      href: https://github.com/samuelemilanesi
+toc: false
+code-tools: false
+---
+
+
+## Education
+
+Politecnico di Milano | Milan, Italy |
+MSc. Mathematical Engineering | Oct 2018 - Apr 2021
+
+Politecnico di Milano | Milan, Italy |
+BSc. Mathematical Engineering | Oct 2015 - Sept 2018

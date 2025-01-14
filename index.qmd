@@ -1,0 +1,12 @@
+---
+title: "Posts"
+code-tools: false
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+format:
+    html:
+        fontsize: 1.0em
+        linestretch: 1
+---

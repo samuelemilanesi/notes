@@ -1,0 +1,52 @@
+---
+title: "Mario"
+date: "2025-01-01"
+abstract: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed molestie, urna sed vestibulum rutrum, lorem urna facilisis leo, id efficitur massa quam non ligula. Cras ac quam metus. Sed ut suscipit eros. Fusce eleifend lacus et justo ullamcorper fringilla. 
+draft: false
+---
+
+## Introduction
+
+This a Quarto document. To learn more about Quarto see <https://quarto.org>.
+
+Click the **Code** button in the header to see the full source code of this document.
+
+Here we call the R `summary()` function---the function's output is included immediately below:
+
+```{python}
+print("?BABDABSD")
+```
+
+
+## Interactivity
+
+You can also add interactive plots. For example:
+
+```{python}
+#| label: fig-temperatures
+#| fig-cap: "New Haven Temperatures"
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.linspace(-10,10,1000)
+plt.plot(x,np.sin(x))
+plt.show()
+```
+
+## Tables
+
+Use the `knitr::kable()` function to print tables as HTML:
+
+```{python}
+print(x)
+```
+
+
+## LaTeX Math
+
+You can also include LaTeX math:
+
+$$
+P\left(A=2\middle|\frac{A^2}{B}>4\right)
+$$
+
+ 

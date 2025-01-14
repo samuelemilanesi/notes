@@ -1,0 +1,95 @@
+{
+	// Specifies the current directory (denoted by ".") in the workspace.
+	// The workspace will encompass the contents of the directory where the .code-workspace file is located
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"build/": true,
+			"**.egg-info/": true,
+			"**.pytest_cache/": true
+		},
+		// Specify the format for generating code documentation (docstrings) using the AutoDocstring extension
+		// Google-style format is widely used and recognized in the Python community
+		"autoDocstring.docstringFormat": "google",
+		// Activate the Python virtual environment (venv) automatically in the currently active terminal
+		"python.terminal.activateEnvInCurrentTerminal": true,
+		"python.terminal.activateEnvironment": true,
+		// Select python interpreter installed in the virtual environmet	
+		"python.defaultInterpreterPath": "${workspaceFolder}/venv/Scripts/python.exe",
+		// Integrated terminal variables
+		"terminal.integrated.env.windows": {
+			"PYTHONPATH": "${workspaceFolder}"
+		},
+		// Git Bash as default profile that should be used when opening an integrated terminal in a Windows environment
+		"terminal.integrated.defaultProfile.windows": "Git Bash",
+		// Allow to open and manage multiple terminal sessions within a single terminal panel,
+		"terminal.integrated.tabs.enabled": true,
+		// Set up pytest as testing framework (see https://docs.pytest.org/en/7.4.x/)
+		"python.testing.unittestEnabled": false,
+		"python.testing.pytestEnabled": true,
+		// Instruct pytest to target the directory "tests" when running tests
+		"python.testing.pytestArgs": [
+			"tests"
+		],
+		"python.analysis.extraPaths": [
+			"${workspaceFolder}/../../../../../quantbackbone/"
+		],
+		// Formatting: Black is a code formatter that enforces a consistent and strict code style. It automatically reformats your Python code
+		// VSCode will automatically add the opening and closing brackets (parentheses) after the function or method name
+		// only affect python "py" files
+		"[python]": {
+			"editor.defaultFormatter": "ms-python.black-formatter",
+			"editor.formatOnSave": true,
+			"editor.codeActionsOnSave": {
+				"source.organizeImports": "explicit"
+			},
+		},
+		"python.analysis.completeFunctionParens": true,
+		// Configuration for debugging launch configuration
+		"launch": {
+			"version": "0.0.1",
+			"configurations": [
+				{
+					"name": "Debug any File",
+					"type": "debugpy",
+					"request": "launch",
+					"program": "${file}",
+					// you want to debug only your own code (i.e., not external libraries or packages)
+					"justMyCode": false
+				},
+				{
+					"name": "Streamlit Debug",
+					"type": "debugpy",
+					"request": "launch",
+					"module": "streamlit",
+					"args": [
+						"run",
+						"${file}" // Path to your Streamlit app file
+					],
+					"console": "integratedTerminal",
+					"env": {
+						"PYTHONUNBUFFERED": "1"
+					},
+					"justMyCode": false
+				}
+			]
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"njpwerner.autodocstring",
+			"ms-python.black-formatter",
+			"ms-python.isort",
+			"ms-toolsai.jupyter",
+			"yzhang.markdown-all-in-one",
+			"ms-python.vscode-pylance",
+			"ms-python.python",
+			"mechatroner.rainbow-csv",
+			"yzane.markdown-pdf"
+		]
+	}
+}
