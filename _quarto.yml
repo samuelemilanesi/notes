@@ -33,8 +33,11 @@ format:
     include-in-header:
       text: |
         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    fontsize: 1.1em
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     linestretch: 1
+    mainfont: Nunito
 jupyter: python3
 execute:
   warning: false

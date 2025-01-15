@@ -7,6 +7,6 @@ listing:
   type: default
 format:
     html:
-        fontsize: 1.0em
+        fontsize: 1.1em
         linestretch: 1
 ---

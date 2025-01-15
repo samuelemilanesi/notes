@@ -4,10 +4,11 @@ pre {
 .quarto-post{
   padding: 0 0 0.3em 0 !important;
   margin: 1em 0 0 0 !important;
+  border-bottom: none !important;
 }
 
 div.quarto-post .body{
-  flex-basis: 85%;
+  flex-basis: 86%;
 }
 div.quarto-post .thumbnail{
   flex-basis: 0%;
@@ -15,9 +16,12 @@ div.quarto-post .thumbnail{
 }
 div.quarto-post .listing-description{
   font-weight: 100;
-  font-size: small;
+  font-size: 14px;
   font-stretch: expanded;
   line-height: 150%;
+}
+div.listing-date{
+  padding-top:2px;
 }
 div.abstract{
   padding-top: 1em;
@@ -31,4 +35,10 @@ section {
 }
 .quarto-title-meta-heading{
   display: none;
+}
+.toc-active ul{
+  margin-left:1px !important
+}
+.quarto-title h1{
+  margin-bottom: 5em
 }
